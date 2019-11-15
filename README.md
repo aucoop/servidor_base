@@ -4,9 +4,9 @@
 ####Academic
 * [Khan Academy] (https://es.khanacademy.org/)
 * [Moodle] (https://moodle.org)
-* [Wikipedia offline] ()
+* [Wikipedia offline] (https://wikipedia.org/wiki/Kiwix)
 ####Networking
-* [DHCP] 
-* [DNS] 
+* DHCP
+* DNS 
 ###Features:
 * Backup of modules
