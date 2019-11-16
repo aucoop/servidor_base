@@ -9,4 +9,4 @@
 * DHCP 
 * DNS 
 ### Features:
-* Backup of modules
+* Backup of volumes and images
