@@ -53,17 +53,18 @@ fi
 
 
 #dhcp config
-iface=ip link | awk -F: '$0 !~ "lo|vir|docker*|wl|^[^0-9]"{print $2;getline}' | head -n1
+iface=`ip link show | awk -F: '$0 !~ "lo|vir|docker*|wl|^[^0-9]"{print $2;getline}' | head -n1`
 sudo ip link set dev $iface up
-sudo ip add address add 172.17.0.1/24 dev $iface
-mkdir ./data
+sudo ip address add 10.0.0.1/24 dev $iface
+
+mkdir -p ./data
 cp dhcpd.conf data/dhcpd.conf
-sudo docker pull networkboot/dhcpd
-docker run -it --rm --init --net host -v "$(pwd)/data":/data networkboot/dhcpd $iface
+# sudo docker pull networkboot/dhcpd
+# docker run -it --rm --init --net host -v "$(pwd)/data":/data networkboot/dhcpd $iface
 # end dhcp config
 
 #config dns
-
+export IFACE=$iface
 
 
 
