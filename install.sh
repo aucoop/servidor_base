@@ -51,7 +51,7 @@ sudo systemctl start ssh.service
 #end ssh
 
 #docker
-a=$(docker --version | grep version)
+a=$(which docker | grep usr)
 if [[ -z $a ]]; then
 echo "Installing docker"
 	SetDockerRepository;
@@ -59,12 +59,21 @@ echo "Installing docker"
 		echo "Error installing the docker repositories, exiting...";
 	else
 		sudo apt-get update -y;
-		sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+		sudo apt-get install -y docker-ce docker-ce-cli containerd.io 
 		sudo apt autoremove -y;
 	fi
 else 
 echo "Docker already installed"
 fi 
+
+a=$(which docker-compose | grep usr)
+if [[ -z $a ]]; then
+	echo "Installing docker-compose"
+	sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+	sudo chmod +x /usr/local/bin/docker-compose
+	sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+fi
 #end docker
 
 #python
@@ -99,11 +108,9 @@ if [ ! -f "./src/docker-compose.yaml" ]; then
 fi
 
 if [ ! -f "/etc/init.d/aucron.sh" ]; then
+	sudo su
 	sudo echo "!#/bin/bash\ncd ${PWD}/src/\n docker-compose up" > /etc/init.d/aucron.sh
+	exit
 fi
 
 echo "Installation complete"
-
-
-
-
