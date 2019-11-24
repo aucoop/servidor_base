@@ -71,7 +71,6 @@ fi
 sudo apt-get install python3 python3-pip -y
 sudo pip3 install getch
 
-
 #dhcp config
 IFACE=`ip link show | awk -F: '$0 !~ "lo|vir|docker*|wl|^[^0-9]"{print substr($2,2,length($2)); exit 0}'`
 sudo ip link set dev $IFACE up
@@ -96,7 +95,7 @@ else
 fi
 
 if [ ! -f "./src/docker-compose.yaml" ]; then
-	python ./src/menu.py
+	./src/menu.py
 fi
 
 echo "Installation complete"
