@@ -102,6 +102,9 @@ else
 	sed -i "s|IFACE=.*|IFACE=${IFACE}|" ~/.bashrc
 fi
 
+export IFACE=$IFACE
+export AUCOOP_DIR=$AUCOOP_DIR
+
 if [ ! -f "./src/docker-compose.yaml" ]; then
 	cd ${PWD}/src
 	python3 menu.py
