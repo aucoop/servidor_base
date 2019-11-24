@@ -46,7 +46,7 @@ sudo apt-get update -y
 #sudo apt-get upgrade -y
 
 #ssh
-sudo apt-get install openssh-server
+sudo apt-get install openssh-server -y
 sudo systemctl start ssh.service
 #end ssh
 
@@ -109,9 +109,9 @@ fi
 echo "Installation complete"
 
 if [ ! -f "/etc/init.d/aucron.sh" ]; then
-	sudo su
-	sudo echo "!#/bin/bash\ncd ${PWD}/src/\n docker-compose up" > /etc/init.d/aucron.sh
+	
+	sudo su -c "echo \"!#/bin/bash\ncd ${PWD}/src/\n docker-compose up\" > /etc/init.d/aucron.sh"
 fi
-
+sudo service docker start
 docker-compose up
 
