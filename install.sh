@@ -95,7 +95,8 @@ else
 fi
 
 if [ ! -f "./src/docker-compose.yaml" ]; then
-	./src/menu.py
+	cd ${PWD}/src
+	python3 menu.py
 fi
 
 echo "Installation complete"
