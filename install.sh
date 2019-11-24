@@ -100,6 +100,7 @@ if [[ -z $(grep "export IFACE=" ~/.bashrc) ]]; then
 else
 	#linea=`grep -m1 -n 'AUCOOP_DIR' ~/.bashrc | cut -d: -f1`
 	sed -i "s|IFACE=.*|IFACE=${IFACE}|" ~/.bashrc
+	sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/all-services-compose.yaml
 fi
 
 export IFACE=$IFACE
@@ -115,6 +116,9 @@ if [ ! -f "/etc/init.d/aucron.sh" ]; then
 	
 	sudo su -c "echo \"!#/bin/bash\ncd ${PWD}/src/\n docker-compose up\" > /etc/init.d/aucron.sh"
 fi
-sudo service docker start
-docker-compose up
+/bin/bash -c "sudo service docker start"
+echo "Starting docker daemon..."
+sleep(5)
+echo "Docker daemon started"
+/bin/bash -c "docker-compose up"
 
