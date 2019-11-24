@@ -108,8 +108,7 @@ sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/all-services-compose.ym
 export IFACE=$IFACE
 export AUCOOP_DIR=$AUCOOP_DIR
 cd ${PWD}/src
-if [ ! -f "./src/docker-compose.yml" ]; then
-	cd ${PWD}/src
+if [ ! -f "./docker-compose.yml" ]; then
 	python3 menu.py
 fi
 echo "Installation complete"
