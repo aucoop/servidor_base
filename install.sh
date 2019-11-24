@@ -116,9 +116,9 @@ if [ ! -f "/etc/init.d/aucron.sh" ]; then
 	
 	sudo su -c "echo \"!#/bin/bash\ncd ${PWD}/src/\n docker-compose up\" > /etc/init.d/aucron.sh"
 fi
-/bin/bash -c "sudo service docker start"
+sudo service docker start
 echo "Starting docker daemon..."
 sleep(5)
 echo "Docker daemon started"
-/bin/bash -c "docker-compose up"
+sudo docker-compose up
 
