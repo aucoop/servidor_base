@@ -30,6 +30,18 @@ SetDockerRepository() {
 
 ### SCRIPT
 
+if [ ! -f "./src/data/dhcpd.conf" ];then
+echo "ERROR: Are you in the installation folder?"
+exit 1
+fi
+if [[ -z $(grep "export AUCOOP_DIR=" ~/.bashrc) ]]; then
+	echo "export AUCOOP_DIR=`pwd`" >> ~/.bashrc  #Això cal fer-ho abans de començar tot.
+else
+	#linea=`grep -m1 -n 'AUCOOP_DIR' ~/.bashrc | cut -d: -f1`
+	sed -i "s|AUCOOP_DIR=.*|AUCOOP_DIR=`pwd`|" ~/.bashrc
+fi
+source ./config/config.sh
+
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
@@ -39,32 +51,56 @@ sudo systemctl start ssh.service
 #end ssh
 
 #docker
-
-SetDockerRepository;
-if (( $? )); then
-	echo "Error installing the docker repositories, exiting...";
-else
-	sudo apt-get update -y;
-	sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-	sudo apt autoremove -y;
-fi
-	
+a=$(docker --version | grep version)
+if [[ -z $a ]]; then
+echo "Installing docker"
+	SetDockerRepository;
+	if (( $? )); then
+		echo "Error installing the docker repositories, exiting...";
+	else
+		sudo apt-get update -y;
+		sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+		sudo apt autoremove -y;
+	fi
+else 
+echo "Docker already installed"
+fi 
 #end docker
+
+#python
+sudo apt-get install python3 python3-pip -y
+sudo pip3 install getch
 
 
 #dhcp config
-iface=`ip link show | awk -F: '$0 !~ "lo|vir|docker*|wl|^[^0-9]"{print $2;getline}' | head -n1`
-sudo ip link set dev $iface up
-sudo ip address add 10.0.0.1/24 dev $iface
+IFACE=`ip link show | awk -F: '$0 !~ "lo|vir|docker*|wl|^[^0-9]"{print substr($2,2,length($2)); exit 0}'`
+sudo ip link set dev $IFACE up
+sudo ip address add 10.0.0.1/24 dev $IFACE
+interfaces="iface $IFACE inet static address  
+10.0.0.1 netmask 255.255.255.0
+pre-up /sbin/iptables-restore /etc/network/iptables"
 
-mkdir -p ./data
-cp dhcpd.conf data/dhcpd.conf
+# mkdir -p ./data
+# cp dhcpd.conf data/dhcpd.conf
 # sudo docker pull networkboot/dhcpd
 # docker run -it --rm --init --net host -v "$(pwd)/data":/data networkboot/dhcpd $iface
 # end dhcp config
 
-#config dns
-export IFACE=$iface
+# per poder reengegar quan es reboota.
+
+if [[ -z $(grep "export IFACE=" ~/.bashrc) ]]; then
+	echo "export IFACE=$IFACE" >> ~/.bashrc  #Això cal fer-ho abans de començar tot.
+else
+	#linea=`grep -m1 -n 'AUCOOP_DIR' ~/.bashrc | cut -d: -f1`
+	sed -i "s|IFACE=.*|IFACE=${IFACE}|" ~/.bashrc
+fi
+
+if [ ! -f "./src/docker-compose.yaml" ]; then
+	python ./src/menu.py
+fi
+
+echo "Installation complete"
+
 
 
 

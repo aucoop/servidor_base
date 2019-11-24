@@ -17,6 +17,7 @@ services:
 
   dhcpd:
     image: networkboot/dhcpd
+    command: ${IFACE}
     network_mode: "host"
     volumes:
       - './data:/data'
