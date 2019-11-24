@@ -100,9 +100,8 @@ if [[ -z $(grep "export IFACE=" ~/.bashrc) ]]; then
 else
 	#linea=`grep -m1 -n 'AUCOOP_DIR' ~/.bashrc | cut -d: -f1`
 	sed -i "s|IFACE=.*|IFACE=${IFACE}|" ~/.bashrc
-	sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/all-services-compose.yaml
 fi
-
+sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/all-services-compose.yaml
 export IFACE=$IFACE
 export AUCOOP_DIR=$AUCOOP_DIR
 
