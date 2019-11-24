@@ -106,11 +106,12 @@ if [ ! -f "./src/docker-compose.yaml" ]; then
 	cd ${PWD}/src
 	python3 menu.py
 fi
+echo "Installation complete"
 
 if [ ! -f "/etc/init.d/aucron.sh" ]; then
 	sudo su
 	sudo echo "!#/bin/bash\ncd ${PWD}/src/\n docker-compose up" > /etc/init.d/aucron.sh
-	exit
 fi
 
-echo "Installation complete"
+docker-compose up
+
