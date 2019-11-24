@@ -101,11 +101,11 @@ else
 	#linea=`grep -m1 -n 'AUCOOP_DIR' ~/.bashrc | cut -d: -f1`
 	sed -i "s|IFACE=.*|IFACE=${IFACE}|" ~/.bashrc
 fi
-sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/all-services-compose.yaml
+sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/all-services-compose.yml
 export IFACE=$IFACE
 export AUCOOP_DIR=$AUCOOP_DIR
 
-if [ ! -f "./src/docker-compose.yaml" ]; then
+if [ ! -f "./src/docker-compose.yml" ]; then
 	cd ${PWD}/src
 	python3 menu.py
 fi
