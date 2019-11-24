@@ -107,7 +107,7 @@ fi
 sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/all-services-compose.yml
 export IFACE=$IFACE
 export AUCOOP_DIR=$AUCOOP_DIR
-
+cd ${PWD}/src
 if [ ! -f "./src/docker-compose.yml" ]; then
 	cd ${PWD}/src
 	python3 menu.py
