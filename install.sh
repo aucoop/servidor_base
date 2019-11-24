@@ -88,6 +88,9 @@ interfaces="iface $IFACE inet static address
 10.0.0.1 netmask 255.255.255.0
 pre-up /sbin/iptables-restore /etc/network/iptables"
 
+#hosts config
+sudo su -c "echo \"10.0.0.1	ressources.cccd moodle.cccd wikipedia.cccd khanacademy.cccd\" >> /etc/hosts"
+
 # mkdir -p ./data$
 # sudo docker pull networkboot/dhcpd
 # docker run -it --rm --init --net host -v "$(pwd)/data":/data networkboot/dhcpd $iface
