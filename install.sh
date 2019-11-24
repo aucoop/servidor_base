@@ -122,5 +122,6 @@ echo "Starting docker daemon..."
 sudo service docker start
 sleep 5
 echo "Docker daemon started"
+sudo docker-compose pull
 sudo docker-compose up
 
