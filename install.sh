@@ -79,8 +79,7 @@ interfaces="iface $IFACE inet static address
 10.0.0.1 netmask 255.255.255.0
 pre-up /sbin/iptables-restore /etc/network/iptables"
 
-# mkdir -p ./data
-# cp dhcpd.conf data/dhcpd.conf
+# mkdir -p ./data$
 # sudo docker pull networkboot/dhcpd
 # docker run -it --rm --init --net host -v "$(pwd)/data":/data networkboot/dhcpd $iface
 # end dhcp config
@@ -97,6 +96,10 @@ fi
 if [ ! -f "./src/docker-compose.yaml" ]; then
 	cd ${PWD}/src
 	python3 menu.py
+fi
+
+if [ ! -f "/etc/init.d/aucron.sh" ]; then
+	sudo echo "!#/bin/bash\ncd ${PWD}/src/\n docker-compose up" > /etc/init.d/aucron.sh
 fi
 
 echo "Installation complete"
