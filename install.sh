@@ -43,7 +43,7 @@ fi
 source ./config/config.sh
 
 sudo apt-get update -y
-sudo apt-get upgrade -y
+#sudo apt-get upgrade -y
 
 #ssh
 sudo apt-get install openssh-server
