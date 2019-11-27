@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# A COMENTAR...
+# ssh... systemctl enable...
+# iniciar la interficie amb la configuracio i el docker copose up
+
 #### FUNCIONS
 SetDockerRepository() {
 	 sudo apt-get install -y \
@@ -84,9 +88,16 @@ sudo pip3 install getch
 IFACE=`ip link show | awk -F: '$0 !~ "lo|vir|docker*|wl|^[^0-9]"{print substr($2,2,length($2)); exit 0}'`
 sudo ip link set dev $IFACE up
 sudo ip address add 10.0.0.1/24 dev $IFACE
+
+if [ -f /etc/network/interfaces ]; then #per debians o linux antic
+
 interfaces="iface $IFACE inet static address  
 10.0.0.1 netmask 255.255.255.0
 pre-up /sbin/iptables-restore /etc/network/iptables"
+
+sudo su -c "echo $interfaces > /etc/network/interfaces"  # escup tot aixo al fitxer d'interfaces.
+
+##AQUI CAL UN ELSE PER ALS UBUNTUS NOUS QUE FAN AIXÒ D'UNA MANERA DIFERENT. SI NO TINDRAN IP STATICA AL INICIAR
 
 #hosts config
 sudo su -c "echo \"10.0.0.1	ressources.cccd moodle.cccd wikipedia.cccd khanacademy.cccd\" >> /etc/hosts"
@@ -113,14 +124,16 @@ if [ ! -f "./docker-compose.yml" ]; then
 fi
 echo "Installation complete"
 
-if [ ! -f "/etc/init.d/aucron.sh" ]; then
+#if [ ! -f "/etc/init.d/aucron.sh" ]; then
 	
-	sudo su -c "echo \"!#/bin/bash\ncd ${PWD}/src/\n docker-compose up\" > /etc/init.d/aucron.sh"
-fi
+#	sudo su -c "echo \"!#/bin/bash\ncd ${PWD}/src/\n docker-compose up\" > /etc/init.d/aucron.sh"
+#fi
+#Estableix el dameon de producció
 echo "Starting docker daemon..."
 sudo service docker start
 sleep 5
 echo "Docker daemon started"
-sudo docker-compose pull
-sudo docker-compose up
+sudo docker swarm init
+sudo docker stack deploy -c /src/docker-compose.ylm cccd
+
 
