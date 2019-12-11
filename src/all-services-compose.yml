@@ -31,7 +31,7 @@ services:
     image: cytopia/bind
     network_mode: "host"
     environment:
-            EXTRA_HOSTS: cccd=147.83.2.137,wikipedia.cccd=10.0.0.1,khanacademy.cccd=10.0.0.1,moodle.cccd=10.0.0.1
+            EXTRA_HOSTS: wikipedia.cccd=10.0.0.1,khanacademy.cccd=10.0.0.1,moodle.cccd=10.0.0.1,*=10.0.0.1
     restart: always
 
   mariadb:

@@ -99,6 +99,11 @@ sudo su -c "echo $interfaces > /etc/network/interfaces"  # escup tot aixo al fit
 
 ##AQUI CAL UN ELSE PER ALS UBUNTUS NOUS QUE FAN AIXÒ D'UNA MANERA DIFERENT. SI NO TINDRAN IP STATICA AL INICIAR
 
+else 
+	sudo rm -rf /etc/netplan/*
+       	sudo su -c "echo -e \"network:\n version: 2\n renderer: networkd\n ethernets: \n  ${IFACE}:\n   dhcp4: no\n   dhcp6: no\n   addresses: [10.0.0.1/24]\n\" > /etc/netplan/01-netcfg.yaml"
+fi
+
 #hosts config
 sudo su -c "echo \"10.0.0.1	ressources.cccd moodle.cccd wikipedia.cccd khanacademy.cccd\" >> /etc/hosts"
 
@@ -133,7 +138,10 @@ echo "Starting docker daemon..."
 sudo service docker start
 sleep 5
 echo "Docker daemon started"
-sudo docker swarm init
-sudo docker stack deploy -c /src/docker-compose.ylm cccd
+sudo docker-compose up
+
+#Docker swarm no permet la interficie host
+#sudo docker swarm init
+#sudo docker stack deploy -c ./docker-compose.yml cccd
 
 
