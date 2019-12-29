@@ -97,7 +97,7 @@ pre-up /sbin/iptables-restore /etc/network/iptables"
 
 sudo su -c "echo $interfaces > /etc/network/interfaces"  # escup tot aixo al fitxer d'interfaces.
 
-##AQUI CAL UN ELSE PER ALS UBUNTUS NOUS QUE FAN AIXÒ D'UNA MANERA DIFERENT. SI NO TINDRAN IP STATICA AL INICIAR
+##AQUI CAL UN ELSE PER ALS UBUNTUS NOUS QUE FAN AIXÒ D'UNA MANERA DIFERENT. SI NO, NO TINDRAN IP STATICA AL INICIAR
 
 else 
 	sudo rm -rf /etc/netplan/*
