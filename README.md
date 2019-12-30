@@ -38,5 +38,5 @@ cd servidor_base
 ./install.sh
 ```
 
-During the installation process it will be prompt a menu for you to chose which services do you want to include in the server.
+During the installation process it will be prompt a menu for you to chose which academic services do you want to include in the server.
 
