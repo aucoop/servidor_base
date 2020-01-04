@@ -34,6 +34,8 @@ SetDockerRepository() {
 
 ### SCRIPT
 
+IP="192.168.1.2"
+
 if [ ! -f "./src/data/dhcpd.conf" ];then
 echo "ERROR: Are you in the installation folder?"
 exit 1
@@ -87,12 +89,12 @@ sudo pip3 install getch
 #dhcp config
 IFACE=`ip link show | awk -F: '$0 !~ "lo|vir|docker*|wl|^[^0-9]"{print substr($2,2,length($2)); exit 0}'`
 sudo ip link set dev $IFACE up
-sudo ip address add 10.0.0.1/24 dev $IFACE
+sudo ip address add $IP/24 dev $IFACE
 
 if [ -f /etc/network/interfaces ]; then #per debians o linux antic
 
 interfaces="iface $IFACE inet static address  
-10.0.0.1 netmask 255.255.255.0
+$IP netmask 255.255.255.0
 pre-up /sbin/iptables-restore /etc/network/iptables"
 
 sudo su -c "echo $interfaces > /etc/network/interfaces"  # escup tot aixo al fitxer d'interfaces.
@@ -101,11 +103,11 @@ sudo su -c "echo $interfaces > /etc/network/interfaces"  # escup tot aixo al fit
 
 else 
 	sudo rm -rf /etc/netplan/*
-       	sudo su -c "echo -e \"network:\n version: 2\n renderer: networkd\n ethernets: \n  ${IFACE}:\n   dhcp4: no\n   dhcp6: no\n   addresses: [10.0.0.1/24]\n\" > /etc/netplan/01-netcfg.yaml"
+       	sudo su -c "echo -e \"network:\n version: 2\n renderer: networkd\n ethernets: \n  ${IFACE}:\n   dhcp4: no\n   dhcp6: no\n   addresses: [${IP}/24]\n   gateway4: 192.168.1.1\n\" > /etc/netplan/01-netcfg.yaml"
 fi
 
 #hosts config
-sudo su -c "echo \"10.0.0.1	ressources.cccd moodle.cccd wikipedia.cccd khanacademy.cccd\" >> /etc/hosts"
+sudo su -c "echo \"$IP	ressources.cccd moodle.cccd wikipedia.cccd khanacademy.cccd\" >> /etc/hosts"
 
 # mkdir -p ./data$
 # sudo docker pull networkboot/dhcpd

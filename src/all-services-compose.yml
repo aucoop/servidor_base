@@ -20,18 +20,18 @@ services:
     - "8081:8008"
     restart: always
 
-  dhcpd:
-    image: networkboot/dhcpd
-    command: enp0s25
-    network_mode: "host"
-    volumes:
-      - './data:/data'
-    restart: always
+#  dhcpd:
+#   image: networkboot/dhcpd
+#   command: enp0s25
+#   network_mode: "host"
+#   volumes:
+#     - './data:/data'
+#   restart: always
   dns:
     image: cytopia/bind
     network_mode: "host"
     environment:
-            EXTRA_HOSTS: wikipedia.cccd=10.0.0.1,khanacademy.cccd=10.0.0.1,moodle.cccd=10.0.0.1,*=10.0.0.1
+            EXTRA_HOSTS: cccd=23.214.222.84,wikipedia.cccd=192.168.1.2,khanacademy.cccd=192.168.1.2,moodle.cccd=192.168.1.2
     restart: always
 
   mariadb:
