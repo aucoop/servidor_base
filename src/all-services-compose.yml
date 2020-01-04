@@ -29,9 +29,12 @@ services:
 #   restart: always
   dns:
     image: cytopia/bind
-    network_mode: "host"
+    #  network_mode: "host"
+    ports:
+            - "53:53/udp"
     environment:
-            EXTRA_HOSTS: cccd=23.214.222.84,wikipedia.cccd=192.168.1.2,khanacademy.cccd=192.168.1.2,moodle.cccd=192.168.1.2
+            EXTRA_HOSTS: cccd=216.58.201.164,wikipedia.cccd=192.168.1.2,khanacademy.cccd=192.168.1.2,moodle.cccd=192.168.1.2
+            DNS_FORWARDER: 8.8.8.8
     restart: always
 
   mariadb:
