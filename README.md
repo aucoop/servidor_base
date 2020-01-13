@@ -40,3 +40,21 @@ cd servidor_base
 
 During the installation process it will be prompt a menu for you to chose which academic services do you want to include in the server.
 
+## Router configuration
+
+Note: For this configuration we are using the Ubiquity EdgeRouter-X. The steps taken from here one descrive the minimum configuration necessary to integrate the services of the repo.
+
+### DHCP Server
+
+Parameters to configure are:
+
+* Subnet 192.168.1.0/24
+* Range Start 192.168.1.100
+* Range Stop 192.168.1.200
+* Router 192.168.1.1
+* DNS 192.168.1.2
+
+Now we need to add a rule to make sure all dns query comes from the server. To acomplish this we'll make a rule.
+
+
+
