@@ -9,7 +9,7 @@ services:
      - './conf/nginx.conf:/etc/nginx/nginx.conf'
     restart: always
   WikipediaOffline:
-    image: garjor/wikioff:latest
+    image: garjor/wikioff-fr:latest
     ports:
     - "8080:5454"
     restart: always
@@ -32,9 +32,11 @@ services:
     #  network_mode: "host"
     ports:
             - "53:53/udp"
+              #    env_file:
+              #    - ./conf/dns_docker.env
     environment:
-            EXTRA_HOSTS: cccd=216.58.201.164,wikipedia.cccd=192.168.1.2,khanacademy.cccd=192.168.1.2,moodle.cccd=192.168.1.2
-            DNS_FORWARDER: 8.8.8.8
+            DNS_FORWARDER: '8.8.8.8'
+            EXTRA_HOSTS: cccd=216.58.201.16,wikipedia.cccd=192.168.1.2,khanacademy.cccd=192.168.1.2,moodle.cccd=192.168.1.2,*=192.168.1.2
     restart: always
 
   mariadb:
