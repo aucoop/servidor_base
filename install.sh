@@ -34,7 +34,7 @@ SetDockerRepository() {
 
 ### SCRIPT
 
-IP="192.168.1.2"
+IP="192.168.33.2"
 
 if [ ! -f "./src/data/dhcpd.conf" ];then
 echo "ERROR: Are you in the installation folder?"
@@ -107,7 +107,7 @@ else
 fi
 
 #hosts config
-sudo su -c "echo \"$IP	ressources.cccd moodle.cccd wikipedia.cccd khanacademy.cccd\" >> /etc/hosts"
+#sudo su -c "echo \"$IP	ressources.ccd moodle.cccd wikipedia.cccd khanacademy.cccd\" >> /etc/hosts"
 
 # mkdir -p ./data$
 # sudo docker pull networkboot/dhcpd
@@ -122,13 +122,10 @@ else
 	#linea=`grep -m1 -n 'AUCOOP_DIR' ~/.bashrc | cut -d: -f1`
 	sed -i "s|IFACE=.*|IFACE=${IFACE}|" ~/.bashrc
 fi
-sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/all-services-compose.yml
+sed -i "s|command: \${IFACE}.*|command: ${IFACE}|" ./src/docker-compose.yml
 export IFACE=$IFACE
 export AUCOOP_DIR=$AUCOOP_DIR
 cd ${PWD}/src
-if [ ! -f "./docker-compose.yml" ]; then
-	python3 menu.py
-fi
 echo "Installation complete"
 
 #if [ ! -f "/etc/init.d/aucron.sh" ]; then
@@ -140,10 +137,10 @@ echo "Starting docker daemon..."
 sudo service docker start
 sleep 5
 echo "Docker daemon started"
-sudo docker-compose up
+#sudo docker-compose up
 
 #Docker swarm no permet la interficie host
-#sudo docker swarm init
-#sudo docker stack deploy -c ./docker-compose.yml cccd
+sudo docker swarm init
+sudo docker stack deploy -c ./docker-compose.yml cccd
 
 
