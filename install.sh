@@ -93,7 +93,7 @@ sudo ip link set dev $IFACE up #Iniciem la interface.
 ## CONFIGURACIÓ DE XARXA PELS UBUNTU
 
 sudo rm -rf /etc/netplan/*
-        sudo su -c "echo -e \"network:\n version: 2\n renderer: networkd\n ethernets: \n  ${IFACE}:\n   dhcp4: no\n   dhcp6: no\n   addresses: [${IP}/24]\n   gateway4: 192.168.1.1\n\" > /etc/netplan/01-netcfg.yaml"
+        sudo su -c "echo -e \"network:\n version: 2\n renderer: networkd\n ethernets: \n  ${IFACE}:\n   dhcp4: no\n   dhcp6: no\n   addresses: [${IP}/24]\n   gateway4: 192.168.33.1\n\" > /etc/netplan/01-netcfg.yaml"
         sudo netplan apply
 #Estableix el dameon de producció
 echo "Starting docker daemon..."
