@@ -11,7 +11,7 @@ services:
      - './conf/mime.types:/etc/nginx/mime.types'
     restart: always
   WikipediaOffline:
-    image: garjor/wikioff:latest
+    image: garjor/wikioff-fr:latest
     ports:
     - "8080:5454"
     restart: always
