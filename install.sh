@@ -105,6 +105,7 @@ echo "Docker daemon started"
 cd src/
 
 #iniciem docker.
+sudo docker-compose pull
 sudo docker swarm init
 sudo docker stack deploy -c ./docker-compose.yml cccd
 
