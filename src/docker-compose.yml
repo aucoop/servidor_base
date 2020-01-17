@@ -7,9 +7,11 @@ services:
     - "80:8082"
     volumes:
      - './conf/nginx.conf:/etc/nginx/nginx.conf'
+     - './web-serv:/etc/web-serv'
+     - './conf/mime.types:/etc/nginx/mime.types'
     restart: always
   WikipediaOffline:
-    image: garjor/wikioff:latest
+    image: garjor/wikioff-fr:latest
     ports:
     - "8080:5454"
     restart: always
@@ -20,18 +22,23 @@ services:
     - "8081:8008"
     restart: always
 
-  dhcpd:
-    image: networkboot/dhcpd
-    command: enp0s25
-    network_mode: "host"
-    volumes:
-      - './data:/data'
-    restart: always
+#  dhcpd:
+#   image: networkboot/dhcpd
+#   command: enp0s25
+#   network_mode: "host"
+#   volumes:
+#     - './data:/data'
+#   restart: always
   dns:
     image: cytopia/bind
-    network_mode: "host"
+    #  network_mode: "host"
+    ports:
+            - "53:53/udp"
+              #    env_file:
+              #    - ./conf/dns_docker.env
     environment:
-            EXTRA_HOSTS: cccd=147.83.2.137,wikipedia.cccd=10.0.0.1,khanacademy.cccd=10.0.0.1,moodle.cccd=10.0.0.1
+            DNS_FORWARDER: '8.8.8.8'
+            EXTRA_HOSTS: ccd=216.58.201.16,wikipedia.ccd=192.168.33.2,khanacademy.ccd=192.168.33.2,moodle.ccd=192.168.33.2,index.ccd=192.168.33.2
     restart: always
 
   mariadb:
