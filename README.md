@@ -13,7 +13,7 @@ Aquesta és la documentació bàsica d'Inite. Inite incorpora un servidor DNS fe
 
 ## Instal·lació ràpida
 
-Guia d'instal·lació ràpida del servei Inite en un servidor Devian/Ubuntu i derivats. La instal·lació pot fer-se de forma automàtica per mitjà del _script_ d'instal·lació _install.sh_ present a la carpeta arrel del projecte o de forma manual amb els passos següents ( **Això encara no està implementat. Cal instal·lar manualment** ). Si s'opta per la instal·lació automàtica el manual segueix al punt [posada en marxa](#Posada en marxa).
+Guia d'instal·lació ràpida del servei Inite en un servidor Devian/Ubuntu i derivats. La instal·lació pot fer-se de forma automàtica per mitjà del _script_ d'instal·lació _install.sh_ present a la carpeta arrel del projecte o de forma manual amb els passos següents ( **Això encara no està implementat. Cal instal·lar manualment** ). Si s'opta per la instal·lació automàtica el manual segueix al punt [posada en marxa](#posada-en-marxa).
 
 ### Instal·lació del programari necessari
 
