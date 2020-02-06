@@ -3,11 +3,13 @@
 # INITE: Captive portal basat en DNS spoofing.
 Aquesta és la documentació bàsica d'Inite. Inite incorpora un servidor DNS fet en python i un [Captive Portal](https://en.wikipedia.org/wiki/Captive_portal) fen en el _REST framework_ de python Django:
 
-- *CustomDNS:* Aquest senzill dns (a la carpeta customDNS) permet l'aparició automàtica del _captive portal_ i l'enllaç amb els altres serveis del servidor. El seu funcionament és el següent:
-1. Un _host_ de la xarxa interna desitja connectar-se a internet. Si el router ha estat ben configurat com explica la documentació bàsica del projecte (**aqui hi ha d'anar un link a una documentació que encara no està feta**) aquest _host_ farà una petició DNS al servei per resoldre el nom del recurs que demana. La base de dades del DNS serà borrada cada (** encara no ho sabem **) hores per forçar el registre de la gent tenint en compte que els cursos pels que s'ha dissenyat aquest servei duren 4 hores i els ordinadors són compartits.
-2. Al rebre aquesta petició el servidor customDNS té dos comporaments:
-  - Aquest host no ha passat pel _captive portal_: En aquest cas mostrarà el portal perquè el host es pugui registar.
-  - Aquest host s'ha registrat correctament al _captive portal_: 
+- **CustomDNS:** Aquest senzill dns (a la carpeta customDNS) permet l'aparició automàtica del _captive portal_ i l'enllaç amb els altres serveis del servidor. El seu funcionament és el següent:
+  1. Un _host_ de la xarxa interna desitja connectar-se a internet. Si el router ha estat ben configurat com explica la documentació bàsica del projecte (**aqui hi ha d'anar un link a una documentació que encara no està feta**) aquest _host_ farà una petició DNS al servei per resoldre el nom del recurs que demana. La base de dades del DNS serà borrada cada (** encara no ho sabem **) hores per forçar el registre de la gent tenint en compte que els cursos pels que s'ha dissenyat aquest servei duren 4 hores i els ordinadors són compartits.
+  2. Al rebre aquesta petició el servidor customDNS té dos comporaments:
+    - Aquest host no ha passat pel _captive portal_: En aquest cas mostrarà el portal perquè el host es pugui registar.
+    - Aquest host s'ha registrat correctament al _captive portal_: En aquest cas podrà accedir als recurosos d'internet i/o del servidor lliurememt
+
+- **Captive Portal:** La funció principal és recollir les dades de les persones que es dirigeixin al centre a fer els cursos. Aquest portal es veurà cada cop que un nou host entri a la xarxa en les X (**aqui cal posar el nombre d'hores**) hores entre que la base de dades es _reseteja_. Permet també a un administrador amb usuari i contrasenya poder-se descarregar aquestes dades i bloquejar o permetre la sortida a internet.
 
 ## Instal·lació ràpida
 
@@ -120,4 +122,3 @@ sudo systemctl start fakeDNS
 ```bash
 sudo systemctl start apache2
 ```
-
