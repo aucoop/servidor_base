@@ -92,9 +92,11 @@ IFACE=`ip link show | awk -F: '$0 !~ "lo|vir|docker*|wl|^[^0-9]"{print substr($2
 sudo ip link set dev $IFACE up #Iniciem la interface.
 ## CONFIGURACIÓ DE XARXA PELS UBUNTU
 
-sudo rm -rf /etc/netplan/*
-        sudo su -c "echo -e \"network:\n version: 2\n renderer: networkd\n ethernets: \n  ${IFACE}:\n   dhcp4: no\n   dhcp6: no\n   addresses: [${IP}/24]\n   gateway4: 192.168.33.1\n\" > /etc/netplan/01-netcfg.yaml"
-        sudo netplan apply
+#sudo rm -rf /etc/netplan/*
+#        sudo su -c "echo -e \"network:\n version: 2\n renderer: networkd\n ethernets: \n  ${IFACE}:\n   dhcp4: no\n   dhcp6: no\n   addresses: [${IP}/24]\n   gateway4: 192.168.33.1\n\" > /etc/netplan/01-netcfg.yaml"
+#        sudo netplan apply
+#
+        
 #Estableix el dameon de producció
 echo "Starting docker daemon..."
 sudo service docker start
@@ -112,5 +114,5 @@ sudo docker stack deploy -c ./docker-compose.yml cccd
 echo "SYSTEM IS GOING DOWN FOR REBOOT..."
 sleep 5
 
-sudo reboot
+#sudo reboot
 
